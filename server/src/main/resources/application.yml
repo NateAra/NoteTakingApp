@@ -3,13 +3,13 @@ server:
   port: 3000
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/saltdb
     username: postgres
     password: postgres123
   jpa:
     defer-datasource-initialization: true
     hibernate:
-      ddl-auto: update # none, create ...
+      ddl-auto: create-drop # none, create ...
   sql:
     init:
       platform: postgresql
