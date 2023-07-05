@@ -1,0 +1,19 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.4
+    restart: always
+    container_name: 'cartapi-postgres'
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres123
+      - POSTGRES_DB=saltdb
+    volumes:
+      - ./data/psql:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 1234:8080
