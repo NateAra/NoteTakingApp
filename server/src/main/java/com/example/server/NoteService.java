@@ -38,10 +38,13 @@ public class NoteService {
     }
 
     public void deleteNoteById(Long id) {
-//        Note note = repo.getNoteById(id);
-//        if (cart != null) {
-//            cartRepo.delete(cart);
-//        }
         repo.delete(id);
+    }
+
+    public Note updateNoteById(Long id, NoteDTO noteDTO) {
+        Note updateNote = new Note();
+        updateNote.setTitle(noteDTO.title());
+        updateNote.setNote(noteDTO.note());
+        return repo.updateNoteById(id, updateNote);
     }
 }

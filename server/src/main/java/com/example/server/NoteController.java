@@ -27,7 +27,6 @@ public class NoteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Note> getNoteById(@PathVariable("id") Long id) {
-//        System.out.println(id);
         Note note = service.getNoteById(id);
         return ResponseEntity.ok().body(note);
     }
@@ -42,5 +41,11 @@ public class NoteController {
     public ResponseEntity<?> deleteNoteById(@PathVariable("id") Long id) {
         service.deleteNoteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Note> updateNoteById(@PathVariable("id") Long id, @RequestBody NoteDTO noteDTO) {
+        Note updateNote = service.updateNoteById(id, noteDTO);
+        return ResponseEntity.ok().body(updateNote);
     }
 }

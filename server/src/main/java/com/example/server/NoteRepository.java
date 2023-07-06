@@ -33,5 +33,14 @@ public class NoteRepository {
         jpaRepo.deleteById(id);
     }
 
-
+    public Note updateNoteById(Long id, Note updatedNote) {
+        Optional<Note> optionalNote = jpaRepo.findById(id);
+        if (optionalNote.isPresent()) {
+            Note existingNote = optionalNote.get();
+            existingNote.setTitle(updatedNote.getTitle());
+            existingNote.setNote(updatedNote.getNote());
+            return jpaRepo.save(existingNote);
+        }
+        throw new IllegalArgumentException("Note not found");
+    }
 }
