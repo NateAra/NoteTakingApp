@@ -10,10 +10,14 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
-    private String name;
+    private String title;
 
-    public Note(String name) {
-        this.name = name;
+    @Column(columnDefinition = "TEXT")
+    private String note;
+
+    public Note(String title, String note) {
+        this.title = title;
+        this.note = note;
     }
 
     public Note() {
@@ -24,11 +28,20 @@ public class Note {
         return id;
     }
 
-    public String getName() {
-        return name;
+
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
