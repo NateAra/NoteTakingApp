@@ -20,10 +20,7 @@ public class NoteRepository {
         return Streamable.of(notes).toList();
     }
 
-    public Note createNote(NoteDTO noteDTO) {
-        Note note = new Note();
-        note.setTitle(noteDTO.title());
-        note.setNote(noteDTO.note());
+    public Note createNote(Note note) {
         return jpaRepo.save(note);
     }
 }

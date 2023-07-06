@@ -19,4 +19,11 @@ public class NoteService {
     public List<Note> listAllNotes() {
         return repo.listNotes();
     }
+
+    public Note createNote(NoteDTO noteDTO) {
+        Note note = new Note();
+        note.setTitle(noteDTO.title());
+        note.setNote(noteDTO.note());
+        return repo.createNote(note);
+    }
 }
