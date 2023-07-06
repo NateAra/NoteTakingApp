@@ -19,4 +19,11 @@ public class NoteRepository {
         Iterable<Note> notes = jpaRepo.findAll();
         return Streamable.of(notes).toList();
     }
+
+    public Note createNote(NoteDTO noteDTO) {
+        Note note = new Note();
+        note.setTitle(noteDTO.title());
+        note.setNote(noteDTO.note());
+        return jpaRepo.save(note);
+    }
 }
