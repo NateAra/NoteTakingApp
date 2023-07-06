@@ -1,3 +1,0 @@
-ALTER TABLE user_note ALTER COLUMN name TYPE TEXT;
-INSERT INTO user_note (name) VALUES ('Hello World');
-INSERT INTO user_note (name) VALUES ('initialization.Check for any syntax errors or issues in the data.sql script: Ensure that the SQL statements in the script are valid and correct. Make sure there are no missing semicolons, incorrect table or column names, or any other syntax-related errors.');
