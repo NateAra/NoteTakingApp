@@ -1,42 +1,89 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 
 interface AddNoteProps {
-  onAdd: () => void;
+  onAdd: (note: { title: string; note: string }) => void;
+  onEdit: (id: number, updatedNote: { title: string; note: string }) => void;
+  editingNote: { id: number; title: string; note: string } | null;
 }
 
 function AddNote(props: AddNoteProps) {
   const [note, setNote] = useState({
     title: "",
-    note: ""
+    note: "",
   });
 
-  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleChange(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     const { name, value } = event.target;
 
-    setNote(prevNote => {
+    setNote((prevNote) => {
       return {
         ...prevNote,
-        [name]: value
+        [name]: value,
       };
     });
   }
 
-  function submitNote(event: FormEvent) {
+  useEffect(() => {
+    if (props.editingNote) {
+      setNote(props.editingNote);
+    } else {
+      setNote({
+        title: "",
+        note: "",
+      });
+    }
+  }, [props.editingNote]);
+
+  const addNote = (event: FormEvent) => {
     event.preventDefault();
 
-    axios.post("http://localhost:3000/api/notes", note)
+    axios
+      .post("http://localhost:3000/api/notes", note)
       .then(() => {
-        props.onAdd();
+        props.onAdd(note);
         setNote({
           title: "",
-          note: ""
+          note: "",
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error creating note:", error);
       });
-  }
+  };
+
+  const editNote = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (!props.editingNote) return;
+
+    axios
+      .put(`http://localhost:3000/api/notes/${props.editingNote.id}`, note)
+      .then(() => {
+        if (props.editingNote) {
+          props.onEdit(props.editingNote.id, note);
+        }
+        setNote({
+          title: "",
+          note: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error updating note:", error);
+      });
+  };
+
+  const submitNote = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (props.editingNote) {
+      editNote(event);
+    } else {
+      addNote(event);
+    }
+  };
 
   return (
     <div>
