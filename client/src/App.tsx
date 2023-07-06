@@ -1,15 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import './App.css'
 import AddNote from './Components/AddNote'
+import { NoteCard } from './Components/NoteCard'
+
 
 function App() {
-  const [note, setNote] = useState<{title: string, note: string}[]>([])
+  const [notes, setNotes] = useState<{id: number, title: string, note: string}[]>([]);
+  // const [editedNote, setEditedNote] = useState<{id: number, title: string, note: string}[]>([])
 
-  function addNote(newNote: {title: string, note: string}) {
-    setNote(prevNote => {
-      return [...prevNote, newNote];
-    });
+  const fetchNotes = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/notes");
+      setNotes(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
   }
+
+  useEffect(() => {
+    fetchNotes();
+  }, []);
+
+  const addNote = () => {
+    fetchNotes();
+  }
+
+  const deleteNote = async (id:number) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/notes/${id}`);
+      fetchNotes();
+    } catch (error) {
+      console.error("Error deleting note", error);
+    }
+  }
+  
+  
 
   return (
     <div>
@@ -17,7 +44,15 @@ function App() {
         <h1>Notary</h1>
       </header>
       <AddNote onAdd={addNote}/>
-
+      {notes.map(note => (
+        <NoteCard 
+        key={note.id}
+        id={note.id} 
+        title={note.title} 
+        note={note.note} 
+        onDelete={deleteNote}
+        />
+      ))}
     </div>
   )
 }

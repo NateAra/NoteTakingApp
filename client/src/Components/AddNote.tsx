@@ -2,7 +2,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 
 interface AddNoteProps {
-  onAdd: (newNote: { id: number, title: string, note: string }) => void;
+  onAdd: () => void;
 }
 
 function AddNote(props: AddNoteProps) {
@@ -26,9 +26,8 @@ function AddNote(props: AddNoteProps) {
     event.preventDefault();
 
     axios.post("http://localhost:3000/api/notes", note)
-      .then(response => {
-        const newNote = response.data;
-        props.onAdd(newNote);
+      .then(() => {
+        props.onAdd();
         setNote({
           title: "",
           note: ""
