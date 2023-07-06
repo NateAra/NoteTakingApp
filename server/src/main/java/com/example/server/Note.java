@@ -12,7 +12,7 @@ public class Note {
     @Column
     private String title;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String note;
 
     public Note(String title, String note) {
