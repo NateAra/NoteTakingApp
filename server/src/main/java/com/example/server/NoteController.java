@@ -25,9 +25,22 @@ public class NoteController {
         return ResponseEntity.ok().body(allNotes);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Note> getNoteById(@PathVariable("id") Long id) {
+//        System.out.println(id);
+        Note note = service.getNoteById(id);
+        return ResponseEntity.ok().body(note);
+    }
+
     @PostMapping
     ResponseEntity<Note> CreateNote(@RequestBody NoteDTO noteDTO) {
         Note newNote = service.createNote(noteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(newNote);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteNoteById(@PathVariable("id") Long id) {
+        service.deleteNoteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

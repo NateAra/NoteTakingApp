@@ -3,9 +3,9 @@ import './App.css'
 import AddNote from './Components/AddNote'
 
 function App() {
-  const [note, setNote] = useState<{title: string, content: string}[]>([])
+  const [note, setNote] = useState<{title: string, note: string}[]>([])
 
-  function addNote(newNote: {title: string, content: string}) {
+  function addNote(newNote: {title: string, note: string}) {
     setNote(prevNote => {
       return [...prevNote, newNote];
     });

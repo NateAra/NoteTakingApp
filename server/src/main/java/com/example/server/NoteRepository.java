@@ -5,6 +5,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class NoteRepository {
@@ -23,4 +24,14 @@ public class NoteRepository {
     public Note createNote(Note note) {
         return jpaRepo.save(note);
     }
+
+    public Optional<Note> getNoteById(Long id) {
+        return jpaRepo.findById(id);
+    }
+
+    public void delete(Long id) {
+        jpaRepo.deleteById(id);
+    }
+
+
 }

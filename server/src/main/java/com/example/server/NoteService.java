@@ -1,9 +1,11 @@
 package com.example.server;
 
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -25,5 +27,21 @@ public class NoteService {
         note.setTitle(noteDTO.title());
         note.setNote(noteDTO.note());
         return repo.createNote(note);
+    }
+
+    public Note getNoteById(Long id) {
+        Optional<Note> note = repo.getNoteById(id);
+        if (note.isPresent()) {
+            return note.get();
+        }
+        throw new IllegalArgumentException("Note not found");
+    }
+
+    public void deleteNoteById(Long id) {
+//        Note note = repo.getNoteById(id);
+//        if (cart != null) {
+//            cartRepo.delete(cart);
+//        }
+        repo.delete(id);
     }
 }

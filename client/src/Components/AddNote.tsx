@@ -52,7 +52,7 @@ function AddNote(props: AddNoteProps) {
           name="note"
           onChange={handleChange}
           value={note.note}
-          placeholder="Text..."
+          placeholder="Note..."
           rows={3}
         />
         <button onClick={submitNote}>Add</button>
