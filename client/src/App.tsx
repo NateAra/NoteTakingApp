@@ -13,6 +13,7 @@ function App() {
     title: string;
     note: string;
   } | null>(null);
+  const [searchWord, setSearchWord] = useState("");
 
   const fetchNotes = async () => {
     try {
@@ -51,17 +52,25 @@ function App() {
       <header>
         <h1>Notary</h1>
       </header>
+      <input
+        type="text"
+        placeholder="Search by title..."
+        value={searchWord}
+        onChange={(event) => setSearchWord(event.target.value)}
+      />
       <AddNote onAdd={addNote} onEdit={editNote} editingNote={editedNote} />
-      {notes.map((note) => (
-        <NoteCard
-          key={note.id}
-          id={note.id}
-          title={note.title}
-          note={note.note}
-          onDelete={deleteNote}
-          onEdit={() => setEditedNote(note)}
-        />
-      ))}
+      {notes
+        .filter((note) => note.title.includes(searchWord))
+        .map((note) => (
+          <NoteCard
+            key={note.id}
+            id={note.id}
+            title={note.title}
+            note={note.note}
+            onDelete={deleteNote}
+            onEdit={() => setEditedNote(note)}
+          />
+        ))}
     </div>
   );
 }
